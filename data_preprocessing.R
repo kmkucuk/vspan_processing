@@ -30,7 +30,7 @@ pos_bitrate_indx = c("n6" = 0, "n5" = 0, "n4" = 0, "n3" = 0, "n2" = 0, "n1" = 0,
 pos_bitrate_keys = names(pos_bitrate_indx)
 
 value_bitrate_keys = as.character(list("bitn6", "bitn5", "bitn4", "bitn3", "bitn2", "bitn1",
-                          "bitz0", "bitp1", "bitp2", "bitp2", "bitp3", "bitp4", "bitp5", "bitp6"))
+                          "bitz0", "bitp1", "bitp2", "bitp3", "bitp4", "bitp5", "bitp6"))
 final_df <- data.frame(subid = rep(NA, 500),
                        PROLIFIC_PID = rep(NA, 500),
                        n6 = rep(NA, 500),
@@ -150,15 +150,15 @@ for (raw_file in raw_file_list){
   final_df['PROLIFIC_PID'][participant_indx, ] <- prolid
   final_df[participant_indx, pos_bitrate_keys] <- colMeans(bitrate_df[,pos_bitrate_keys], na.rm=TRUE)
   final_df[participant_indx, value_bitrate_keys] <- final_df[participant_indx, pos_bitrate_keys]*4.6761-0.036996
-
-  sum(subset(final_df[participant_indx, ], select=n4:p4), na.rm=TRUE)
+  final_df[participant_indx, "sumbit1"] <- sum(subset(final_df[participant_indx, ], select=bitn5:bitp5), na.rm=TRUE)
+  final_df[participant_indx, "sumbit2"] <- sum(subset(final_df[participant_indx, ], select=bitn4:bitp4), na.rm=TRUE)
   setwd(processed_file_path)
   write_xlsx(processed_ind_df, paste(paste(subid, date, sep='_'), '.xlsx', sep=''))
   
 }
 
 
-
+write_xlsx(final_df, 'final_data.xlsx')
 
 cat("Processing complete /n")
 
