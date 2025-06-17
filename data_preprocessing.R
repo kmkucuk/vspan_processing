@@ -124,7 +124,7 @@ for (raw_file in raw_file_list){
       processed_ind_df['subid'][indx, ] <- df['subid'][rowi, ]
       processed_ind_df['PROLIFIC_PID'][indx, ] <- df['PROLIFIC_PID'][rowi, ]
       
-      pos_org <- unlist(df['position'][rowi, ])
+      pos_org <- as.integer(unlist(df['position'][rowi, ]))
       
       for (i in 1:3){
         processed_ind_df[paste('response', as.character(i), sep = "")][indx, 1] <- split_response[i]
